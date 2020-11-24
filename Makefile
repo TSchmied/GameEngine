@@ -1,16 +1,16 @@
-OBJS = engine_test.cpp
+OBJS = src\engine_test.cpp
 
 CC = g++
 
-INCLUDE_PATHS = -IC:\mingw-w64\dev_libs\SDL2-2.0.12\include\SDL2
+INCLUDE_PATHS = -IC:\mingw-w64\dev_libs\SDL2-2.0.12\include\SDL2 -IC:\mingw-w64\dev_libs\SDL2_image-2.0.5\include\SDL2 
 
-LIBRARY_PATHS = -LC:\mingw-w64\dev_libs\SDL2-2.0.12\lib
+LIBRARY_PATHS = -LC:\mingw-w64\dev_libs\SDL2-2.0.12\lib -LC:\mingw-w64\dev_libs\SDL2_image-2.0.5\lib
 
 # -w suppresses all warnings
 # -Wl,-subsystem,windows gets rid of the console window
 COMPILER_FLAGS = -w -Wl,-subsystem,windows
 
-LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2
+LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 
 OBJ_NAME = builds\win64\GameEngine
 
