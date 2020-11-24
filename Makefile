@@ -12,7 +12,7 @@ COMPILER_FLAGS = -w -Wl,-subsystem,windows
 
 LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2
 
-OBJ_NAME = Builds\GameEngine
+OBJ_NAME = builds\win64\GameEngine
 
 all : build run
 .PHONY: all
@@ -20,5 +20,7 @@ all : build run
 build : $(OBJS)
 	$(CC) $(OBJS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
 
+.ONESHELL:
 run :
-	Builds\GameEngine.exe
+	cd builds/win64
+	start GameEngine.exe

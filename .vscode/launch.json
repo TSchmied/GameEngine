@@ -5,24 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Build",
+            "name": "Run (WINDOWSx64)",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "mingw32-make.exe",
+            "program": "${workspaceFolder}/Builds/win64/GameEngine.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "Run",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/Builds/GameEngine.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/builds/win64",
             "environment": [],
             "externalConsole": false
         }
