@@ -6,6 +6,9 @@ Texture::Texture()
     sdlRenderer = NULL;
     width = 0;
     height = 0;
+    keyR = 255;
+    keyG = 0;
+    keyB = 200;
 }
 Texture::~Texture()
 {
@@ -14,6 +17,12 @@ Texture::~Texture()
 void Texture::setRenderer(SDL_Renderer *renderer)
 {
     sdlRenderer = renderer;
+}
+void Texture::setKeyColor(Uint8 R, Uint8 G, Uint8 B)
+{
+    keyR = R;
+    keyG = G;
+    keyB = B;
 }
 bool Texture::loadFromFile(std::string path)
 {
@@ -29,7 +38,7 @@ bool Texture::loadFromFile(std::string path)
         printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
         return false;
     }
-    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 255, 255));
+    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, keyR, keyG, keyB));
     if ((newTexture = SDL_CreateTextureFromSurface(sdlRenderer, loadedSurface)) == NULL)
     {
         printf("Unable to create texture from %s! SDL_Error: %s\n", path.c_str(), SDL_GetError());
@@ -53,12 +62,17 @@ void Texture::free()
         height = 0;
     }
 }
-void Texture::render(int x, int y)
+void Texture::render(int x, int y, SDL_Rect *clip)
 {
     if (!Texture::checkRenderer())
         return;
     SDL_Rect renderQuad = {x, y, width, height};
-    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, &renderQuad);
+    if (clip != NULL)
+    {
+        renderQuad.w = clip->w;
+        renderQuad.h = clip->h;
+    }
+    SDL_RenderCopy(sdlRenderer, sdlTexture, clip, &renderQuad);
 }
 bool Texture::checkRenderer()
 {

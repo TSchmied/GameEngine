@@ -12,18 +12,22 @@ public:
     Texture();
     ~Texture();
 
-    void setRenderer(SDL_Renderer *renderer);
     bool loadFromFile(std::string path);
     void free();
-    void render(int x, int y);
+    void render(int x, int y, SDL_Rect *clip = NULL);
     int getWidth() { return width; }
     int getHeight() { return height; }
+    void setRenderer(SDL_Renderer *renderer);
+    void setKeyColor(Uint8 R, Uint8 G, Uint8 B);
 
 private:
     SDL_Texture *sdlTexture;
     SDL_Renderer *sdlRenderer;
     int width;
     int height;
+    Uint8 keyR;
+    Uint8 keyG;
+    Uint8 keyB;
 
     bool checkRenderer();
 };

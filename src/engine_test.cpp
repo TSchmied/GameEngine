@@ -12,6 +12,7 @@ SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 Texture foregroundTexture;
 Texture backgroundTexture;
+Texture texturepack;
 
 bool init()
 {
@@ -67,7 +68,9 @@ SDL_Texture *loadTexture(std::string path)
 bool loadMedia()
 {
 	foregroundTexture.setRenderer(renderer);
+	foregroundTexture.setKeyColor(0, 255, 255);
 	backgroundTexture.setRenderer(renderer);
+	texturepack.setRenderer(renderer);
 	if (!foregroundTexture.loadFromFile("resources/texture.png"))
 	{
 		printf("Failed to load texture image!\n");
@@ -76,6 +79,11 @@ bool loadMedia()
 	if (!backgroundTexture.loadFromFile("resources/background.jpg"))
 	{
 		printf("Failed to load texture image!\n");
+		return false;
+	}
+	if (!texturepack.loadFromFile("resources/texturepack.jpg"))
+	{
+		printf("Failed to load texturepack!\n");
 		return false;
 	}
 	return true;
@@ -124,6 +132,10 @@ int main(int argc, char *args[])
 
 		backgroundTexture.render(0, 0);
 		foregroundTexture.render(240, 190);
+		SDL_Rect clipRect = {64, 64, 64, 64};
+		texturepack.render(128, 128, &clipRect);
+		clipRect = {64, 128, 64, 64};
+		texturepack.render(256, 128, &clipRect);
 
 		SDL_RenderPresent(renderer);
 	}
