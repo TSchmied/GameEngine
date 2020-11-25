@@ -3,91 +3,15 @@
 #include <stdio.h>
 #include <string>
 
-class Texture
-{
-    public:
-        Texture();
-        ~Texture();
-
-        bool loadFromFile(std::string path);
-        void free();
-        void render(int x, int y);
-        int getWidth();
-        int getHeight();
-    
-    private:
-        SDL_Texture* sdlTexture;
-        int width;
-        int height;
-};
+#include "Texture/Texture.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
+SDL_Window *window = NULL;
+SDL_Renderer *renderer = NULL;
 Texture foregroundTexture;
 Texture backgroundTexture;
-
-Texture::Texture()
-{
-    sdlTexture = NULL;
-    width = 0;
-    height = 0;
-}
-Texture::~Texture()
-{
-    free();
-}
-bool Texture::loadFromFile(std::string path)
-{
-    free();
-
-    SDL_Texture* newTexture = NULL;
-    SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-    if (loadedSurface == NULL)
-    {
-        printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
-        return false;
-    }
-    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 255, 255));
-    if ((newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface)) == NULL)
-	{
-		printf("Unable to create texture from %s! SDL_Error: %s\n", path.c_str(), SDL_GetError());
-		return false;
-	}
-	width = loadedSurface->w;
-	height = loadedSurface->h;
-
-	SDL_FreeSurface(loadedSurface);
-
-	sdlTexture = newTexture;
-	return true;
-}
-void Texture::free()
-{
-	if (sdlTexture != NULL)
-	{
-		SDL_DestroyTexture(sdlTexture);
-		sdlTexture = NULL;
-		width = 0;
-		height = 0;
-	}
-}
-void Texture::render(int x, int y)
-{
-	SDL_Rect renderQuad = { x, y, width, height };
-	SDL_RenderCopy(renderer, sdlTexture, NULL, &renderQuad);
-}
-int Texture::getWidth()
-{
-	return width;
-}
-int Texture::getHeight()
-{
-	return height;
-}
-
 
 bool init()
 {
@@ -123,10 +47,10 @@ bool init()
 	return true;
 }
 
-SDL_Texture* loadTexture(std::string path)
+SDL_Texture *loadTexture(std::string path)
 {
-	SDL_Texture* newTexture = NULL;
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+	SDL_Texture *newTexture = NULL;
+	SDL_Surface *loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL)
 	{
 		printf("Unable to load image %s! SDL_Error: %s\n", path.c_str(), IMG_GetError());
@@ -142,6 +66,8 @@ SDL_Texture* loadTexture(std::string path)
 
 bool loadMedia()
 {
+	foregroundTexture.setRenderer(renderer);
+	backgroundTexture.setRenderer(renderer);
 	if (!foregroundTexture.loadFromFile("resources/texture.png"))
 	{
 		printf("Failed to load texture image!\n");
@@ -168,7 +94,7 @@ void exit()
 	SDL_Quit();
 }
 
-int main( int argc, char* args[] )
+int main(int argc, char *args[])
 {
 	if (!init())
 	{

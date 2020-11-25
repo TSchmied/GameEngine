@@ -1,0 +1,71 @@
+#include "Texture.h"
+
+Texture::Texture()
+{
+    sdlTexture = NULL;
+    sdlRenderer = NULL;
+    width = 0;
+    height = 0;
+}
+Texture::~Texture()
+{
+    free();
+}
+void Texture::setRenderer(SDL_Renderer *renderer)
+{
+    sdlRenderer = renderer;
+}
+bool Texture::loadFromFile(std::string path)
+{
+    if (!Texture::checkRenderer())
+        return false;
+
+    free();
+
+    SDL_Texture *newTexture = NULL;
+    SDL_Surface *loadedSurface = IMG_Load(path.c_str());
+    if (loadedSurface == NULL)
+    {
+        printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+        return false;
+    }
+    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 255, 255));
+    if ((newTexture = SDL_CreateTextureFromSurface(sdlRenderer, loadedSurface)) == NULL)
+    {
+        printf("Unable to create texture from %s! SDL_Error: %s\n", path.c_str(), SDL_GetError());
+        return false;
+    }
+    width = loadedSurface->w;
+    height = loadedSurface->h;
+
+    SDL_FreeSurface(loadedSurface);
+
+    sdlTexture = newTexture;
+    return true;
+}
+void Texture::free()
+{
+    if (sdlTexture != NULL)
+    {
+        SDL_DestroyTexture(sdlTexture);
+        sdlTexture = NULL;
+        width = 0;
+        height = 0;
+    }
+}
+void Texture::render(int x, int y)
+{
+    if (!Texture::checkRenderer())
+        return;
+    SDL_Rect renderQuad = {x, y, width, height};
+    SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, &renderQuad);
+}
+bool Texture::checkRenderer()
+{
+    if (sdlRenderer == NULL)
+    {
+        printf("Texture error: No renderer has been set!\n");
+        return false;
+    }
+    return true;
+}

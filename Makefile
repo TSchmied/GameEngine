@@ -1,4 +1,4 @@
-OBJS = src\engine_test.cpp
+OBJS = src\engine_test.cpp src\Texture\Texture.cpp
 
 CC = g++
 
