@@ -1,0 +1,3 @@
+ - IDE
+    - Cross-platform
+    - Media manager with editable properties -> these then generate C++ code (in the loadMedia function)
