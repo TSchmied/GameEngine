@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 #include <algorithm>
@@ -14,6 +15,7 @@ SDL_Renderer *renderer = NULL;
 Texture foregroundTexture;
 Texture backgroundTexture;
 Texture texturepack;
+Mix_Music *music = NULL;
 
 Uint8 modR, modG, modB;
 
@@ -45,6 +47,11 @@ bool init()
 	if (!(IMG_Init(imgFlags) & imgFlags))
 	{
 		printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+		return false;
+	}
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
 	}
 
@@ -89,6 +96,11 @@ bool loadMedia()
 		printf("Failed to load texturepack!\n");
 		return false;
 	}
+	if ((music = Mix_LoadMUS("resources/music.ogg")) == NULL)
+	{
+		printf("Failed to load music! SDL_mixer Error: %s\n", Mix_GetError());
+		return false;
+	}
 	return true;
 }
 
@@ -101,7 +113,10 @@ void exit()
 	renderer = NULL;
 	SDL_DestroyWindow(window);
 	window = NULL;
+	Mix_FreeMusic(music);
+	music = NULL;
 
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -146,9 +161,25 @@ int main(int argc, char *args[])
 				case SDLK_b:
 					modB = std::clamp(modB + incBy, 0, 255);
 					break;
+
+				case SDLK_SPACE:
+					if (Mix_PlayingMusic() == 0)
+						Mix_PlayMusic(music, -1);
+					else
+					{
+						if (Mix_PausedMusic() == 1)
+							Mix_ResumeMusic();
+						else
+							Mix_PauseMusic();
+					}
+					break;
+				case SDLK_ESCAPE:
+					Mix_HaltMusic();
+					break;
 				}
 			}
 		}
+
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
 
