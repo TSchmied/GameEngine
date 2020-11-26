@@ -10,3 +10,7 @@
 
 2. Run `make` to build and run the project (defaults to the Windows config)
 
+
+### Features
+ - Texturepacks - render specific cell simply by specifying its ID
+ - Animated textures - compatible with texturepacks
