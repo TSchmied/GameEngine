@@ -28,6 +28,15 @@ void Texture::setModColor(Uint8 R, Uint8 G, Uint8 B)
 {
     SDL_SetTextureColorMod(sdlTexture, R, G, B);
 }
+void Texture::setBlendMode(SDL_BlendMode blendMode)
+{
+    SDL_SetTextureBlendMode(sdlTexture, blendMode);
+}
+void Texture::setAlpha(Uint8 alpha)
+{
+    SDL_SetTextureAlphaMod(sdlTexture, alpha);
+}
+
 bool Texture::loadFromFile(std::string path)
 {
     if (!Texture::checkRenderer())

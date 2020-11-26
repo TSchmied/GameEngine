@@ -3,9 +3,11 @@
 #include <SDL_mixer.h>
 #include <stdio.h>
 #include <string>
+#include <math.h>
 #include <algorithm>
 
-#include "Texture/Texture.h"
+#include "Texture.h"
+#include "Timer.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -18,6 +20,7 @@ Texture texturepack;
 Mix_Music *music = NULL;
 
 Uint8 modR, modG, modB;
+Uint8 alphaTest = 255;
 
 bool init()
 {
@@ -136,6 +139,7 @@ int main(int argc, char *args[])
 
 	bool shouldQuit = false;
 	SDL_Event e;
+	Timer timer;
 	while (!shouldQuit)
 	{
 		while (SDL_PollEvent(&e) != 0)
@@ -162,6 +166,13 @@ int main(int argc, char *args[])
 					modB = std::clamp(modB + incBy, 0, 255);
 					break;
 
+				case SDLK_a:
+					if (timer.isStarted())
+						timer.stop();
+					else
+						timer.start();
+					break;
+
 				case SDLK_SPACE:
 					if (Mix_PlayingMusic() == 0)
 						Mix_PlayMusic(music, -1);
@@ -185,12 +196,15 @@ int main(int argc, char *args[])
 
 		backgroundTexture.render(0, 0);
 		foregroundTexture.setModColor(modR, modG, modB);
+		foregroundTexture.setAlpha(alphaTest);
 		foregroundTexture.render(240, 190);
 
 		SDL_Rect clipRect = {64, 64, 64, 64};
 		texturepack.render(128, 128, &clipRect);
 		clipRect = {64, 128, 64, 64};
 		texturepack.render(256, 128, &clipRect);
+
+		alphaTest = (sin(timer.getTicks() / 200.f) / 2 + .5f) * 255;
 
 		SDL_RenderPresent(renderer);
 	}
