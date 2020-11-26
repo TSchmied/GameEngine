@@ -24,6 +24,10 @@ void Texture::setKeyColor(Uint8 R, Uint8 G, Uint8 B)
     keyG = G;
     keyB = B;
 }
+void Texture::setModColor(Uint8 R, Uint8 G, Uint8 B)
+{
+    SDL_SetTextureColorMod(sdlTexture, R, G, B);
+}
 bool Texture::loadFromFile(std::string path)
 {
     if (!Texture::checkRenderer())

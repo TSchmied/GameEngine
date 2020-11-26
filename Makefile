@@ -8,7 +8,7 @@ LIBRARY_PATHS = -LC:\mingw-w64\dev_libs\SDL2-2.0.12\lib -LC:\mingw-w64\dev_libs\
 
 # -w suppresses all warnings
 # -Wl,-subsystem,windows gets rid of the console window
-COMPILER_FLAGS = -w -Wl,-subsystem,windows
+COMPILER_FLAGS = -std=c++17 -w -Wl,-subsystem,windows
 
 LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 

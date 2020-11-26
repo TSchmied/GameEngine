@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include <string>
+#include <algorithm>
 
 #include "Texture/Texture.h"
 
@@ -13,6 +14,8 @@ SDL_Renderer *renderer = NULL;
 Texture foregroundTexture;
 Texture backgroundTexture;
 Texture texturepack;
+
+Uint8 modR, modG, modB;
 
 bool init()
 {
@@ -93,6 +96,7 @@ void exit()
 {
 	foregroundTexture.free();
 	backgroundTexture.free();
+	texturepack.free();
 	SDL_DestroyRenderer(renderer);
 	renderer = NULL;
 	SDL_DestroyWindow(window);
@@ -125,13 +129,33 @@ int main(int argc, char *args[])
 			{
 				shouldQuit = true;
 			}
-		}
+			else if (e.type == SDL_KEYDOWN)
+			{
+				int incBy = 32;
+				if (e.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) > 0)
+					incBy = -32;
 
+				switch (e.key.keysym.sym)
+				{
+				case SDLK_r:
+					modR = std::clamp(modR + incBy, 0, 255);
+					break;
+				case SDLK_g:
+					modG = std::clamp(modG + incBy, 0, 255);
+					break;
+				case SDLK_b:
+					modB = std::clamp(modB + incBy, 0, 255);
+					break;
+				}
+			}
+		}
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
 
 		backgroundTexture.render(0, 0);
+		foregroundTexture.setModColor(modR, modG, modB);
 		foregroundTexture.render(240, 190);
+
 		SDL_Rect clipRect = {64, 64, 64, 64};
 		texturepack.render(128, 128, &clipRect);
 		clipRect = {64, 128, 64, 64};

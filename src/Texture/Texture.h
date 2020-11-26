@@ -19,6 +19,7 @@ public:
     int getHeight() { return height; }
     void setRenderer(SDL_Renderer *renderer);
     void setKeyColor(Uint8 R, Uint8 G, Uint8 B);
+    void setModColor(Uint8 R, Uint8 G, Uint8 B);
 
 private:
     SDL_Texture *sdlTexture;
