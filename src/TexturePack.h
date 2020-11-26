@@ -12,6 +12,7 @@ public:
     void setCellSize(int width, int height);
     void setCellId(int cellId);
     void render(int x, int y);
+    void render(int x, int y, int cellId);
 
 private:
     int cellWidth;

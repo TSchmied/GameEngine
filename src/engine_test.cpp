@@ -8,6 +8,7 @@
 
 #include "Texture.h"
 #include "TexturePack.h"
+#include "TextureAnimation.h"
 #include "Timer.h"
 
 const int SCREEN_WIDTH = 640;
@@ -19,6 +20,7 @@ Texture foregroundTexture;
 Texture backgroundTexture;
 TexturePack texturepack;
 Mix_Music *music = NULL;
+TextureAnimation textureanim;
 
 Uint8 modR, modG, modB;
 Uint8 alphaTest = 255;
@@ -106,6 +108,9 @@ bool loadMedia()
 		printf("Failed to load music! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
 	}
+	textureanim.setTexturePack(&texturepack);
+	textureanim.setMinMaxCellIds(4, 7);
+	textureanim.play(.1f);
 	return true;
 }
 
@@ -209,6 +214,7 @@ int main(int argc, char *args[])
 		foregroundTexture.setModColor(modR, modG, modB);
 		foregroundTexture.setAlpha(alphaTest);
 		foregroundTexture.render(240, 190);
+		textureanim.render(0, 0);
 
 		texturepack.render(128, 128);
 

@@ -27,3 +27,10 @@ void TexturePack::render(int x, int y)
 {
     Texture::render(x, y, &cellRect);
 }
+void TexturePack::render(int x, int y, int cellId)
+{
+    int cellX = (cellId % cellsPerRow) * cellWidth;
+    int cellY = floor(cellId / cellsPerRow) * cellHeight;
+    SDL_Rect tempRect = {cellX, cellY, cellWidth, cellHeight};
+    Texture::render(x, y, &tempRect);
+}
