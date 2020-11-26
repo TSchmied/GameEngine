@@ -175,7 +175,12 @@ int main(int argc, char *args[])
 
 				case SDLK_a:
 					if (timer.isStarted())
-						timer.stop();
+					{
+						if (timer.isPaused())
+							timer.unpause();
+						else
+							timer.pause();
+					}
 					else
 						timer.start();
 					break;
