@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "Texture.h"
+#include "TexturePack.h"
 #include "Timer.h"
 
 const int SCREEN_WIDTH = 640;
@@ -16,11 +17,12 @@ SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 Texture foregroundTexture;
 Texture backgroundTexture;
-Texture texturepack;
+TexturePack texturepack;
 Mix_Music *music = NULL;
 
 Uint8 modR, modG, modB;
 Uint8 alphaTest = 255;
+Uint8 cellIdTest = 0;
 
 bool init()
 {
@@ -37,7 +39,7 @@ bool init()
 		return false;
 	}
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == NULL)
 	{
 		printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -94,7 +96,7 @@ bool loadMedia()
 		printf("Failed to load texture image!\n");
 		return false;
 	}
-	if (!texturepack.loadFromFile("resources/texturepack.jpg"))
+	if (!texturepack.loadFromFile("resources/texturepack.png"))
 	{
 		printf("Failed to load texturepack!\n");
 		return false;
@@ -173,6 +175,15 @@ int main(int argc, char *args[])
 						timer.start();
 					break;
 
+				case SDLK_KP_PLUS:
+					cellIdTest++;
+					texturepack.setCellId(cellIdTest);
+					break;
+				case SDLK_KP_MINUS:
+					cellIdTest--;
+					texturepack.setCellId(cellIdTest);
+					break;
+
 				case SDLK_SPACE:
 					if (Mix_PlayingMusic() == 0)
 						Mix_PlayMusic(music, -1);
@@ -199,10 +210,7 @@ int main(int argc, char *args[])
 		foregroundTexture.setAlpha(alphaTest);
 		foregroundTexture.render(240, 190);
 
-		SDL_Rect clipRect = {64, 64, 64, 64};
-		texturepack.render(128, 128, &clipRect);
-		clipRect = {64, 128, 64, 64};
-		texturepack.render(256, 128, &clipRect);
+		texturepack.render(128, 128);
 
 		alphaTest = (sin(timer.getTicks() / 200.f) / 2 + .5f) * 255;
 
