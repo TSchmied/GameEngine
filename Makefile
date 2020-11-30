@@ -1,4 +1,4 @@
-OBJS = src\engine_test.cpp src\Texture.cpp src\TexturePack.cpp src\TextureAnimation.cpp src\Timer.cpp
+OBJS = src\TestApp.cpp
 
 CC = g++
 
