@@ -1,4 +1,4 @@
-![kvejge logo](branding/logo_color.png)
+<img src="branding/logo_color.png" alt="kvejge logo" style="zoom:50%;" />
 
 # **REWRITE IN PROGRESS**
 
