@@ -2,7 +2,7 @@
 
 int main(int argc, char *args[])
 {
-    GameEngine::Logger logger;
+    Kvejge::Logger logger;
     logger.logSomeStuff();
     return 0;
 }

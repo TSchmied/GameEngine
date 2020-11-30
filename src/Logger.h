@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-namespace GameEngine
+namespace Kvejge
 {
     class Logger
     {
@@ -13,6 +13,6 @@ namespace GameEngine
 
         void logSomeStuff() { printf("Fuck you\n"); }
     };
-} // namespace GameEngine
+} // namespace Kvejge
 
 #endif
