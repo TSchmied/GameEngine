@@ -5,9 +5,9 @@
 ## Done
  - OOP structure design
  - Logger util [IN PROGRESS]
+ - Compilation using SDL2
 
 ## To do
- - Compilation using SDL2
  - OOP structure design implementation
  - Timer util
  - Textures
