@@ -1,3 +1,5 @@
 builds/win64/GameEngine.exe
 builds/DEV/kvejge_project.exe
 builds/PROD/kvejge_project.exe
+builds/WIN/DEV/kvejge_project.exe
+builds/WIN/PROD/kvejge_project.exe
