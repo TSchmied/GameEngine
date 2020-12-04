@@ -1,0 +1,38 @@
+{
+    "projectName": "some_project",
+    "executableName": "kvejge_project_2",
+    "buildConfigs": [
+        {
+            "name": "win64_dev",
+            "compileArgs": "-Wall -Wextra -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer",
+            "executableExtension": ".exe",
+            "cpps": [
+                "TestApp.cpp"
+            ]
+        },
+        {
+            "name": "win64_prod",
+            "compileArgs": "-w -Wl,-subsystem,windows -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer",
+            "executableExtension": ".exe",
+            "cpps": [
+                "TestApp.cpp"
+            ]
+        },
+        {
+            "name": "wasm_dev",
+            "compileArgs": "-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -Wall -Wextra -c",
+            "executableExtension": ".html",
+            "cpps": [
+                "TestApp.cpp"
+            ]
+        },
+        {
+            "name": "wasm_prod",
+            "compileArgs": "-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -w -Wl,-subsystem,windows -O3 -c",
+            "executableExtension": ".js",
+            "cpps": [
+                "TestApp.cpp"
+            ]
+        }
+    ]
+}

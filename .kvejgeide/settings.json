@@ -1,0 +1,20 @@
+{
+    "buildConfigCompiler": [
+        {
+            "config": "win64_dev",
+            "compiler": "g++"
+        },
+        {
+            "config": "win64_prod",
+            "compiler": "g++"
+        },
+        {
+            "config": "wasm_dev",
+            "compiler": "emcc"
+        },
+        {
+            "config": "wasm_prod",
+            "compiler": "emcc"
+        }
+    ]
+}

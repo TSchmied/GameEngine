@@ -3,3 +3,5 @@ builds/DEV/kvejge_project.exe
 builds/PROD/kvejge_project.exe
 builds/WIN/DEV/kvejge_project.exe
 builds/WIN/PROD/kvejge_project.exe
+builds/win64_dev/kvejge_project_2.exe
+builds/win64_prod/kvejge_project_2.exe
