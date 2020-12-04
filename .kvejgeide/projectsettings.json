@@ -21,18 +21,11 @@
         {
             "name": "wasm_dev",
             "compileArgs": "-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -Wall -Wextra -c",
-            "executableExtension": ".html",
+            "executableExtension": ".o",
             "cpps": [
                 "TestApp.cpp"
-            ]
-        },
-        {
-            "name": "wasm_prod",
-            "compileArgs": "-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -w -Wl,-subsystem,windows -O3 -c",
-            "executableExtension": ".js",
-            "cpps": [
-                "TestApp.cpp"
-            ]
+            ],
+            "afterCommand": "{compiler} {cwd}{executableName}{executableExtension} -o {cwd}{executableName}.html -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2"
         }
     ]
 }

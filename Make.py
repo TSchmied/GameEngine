@@ -12,6 +12,7 @@ def main(argv):
     compileArgs = ""
     executableName = ""
     executableExtension = ""
+    afterCommand = ""
     cpps = []
     compiler = ""
 
@@ -31,6 +32,8 @@ def main(argv):
                 cpps = []
                 for cpp in bc["cpps"]:
                     cpps.append("src/" + cpp)
+                if "afterCommand" in bc:
+                    afterCommand = bc["afterCommand"]
 
     with open(os.getcwd() + "/.kvejgeide/settings.json") as settings:
         settingsData = json.load(settings)
@@ -49,7 +52,9 @@ def main(argv):
     libraryPaths = "-LC:\\mingw-w64\\dev_libs\\SDL2-2.0.12\\lib -LC:\\mingw-w64\\dev_libs\\SDL2_image-2.0.5\\lib -LC:\\mingw-w64\\dev_libs\\SDL2_mixer-2.0.4\\lib"
     os.system("{compiler} {cpps} {includePaths} {libraryPaths} -std=c++17 {compileArgs} -o {outputPath}{executableName}{executableExtension}"
               .format(compiler=compiler, cpps=" ".join(cpps), includePaths=includePaths, libraryPaths=libraryPaths, compileArgs=compileArgs, outputPath=outputPath, executableName=executableName, executableExtension=executableExtension))
-
+    if afterCommand != "":
+        print("\nRunning afterCommand...")
+        os.system(afterCommand.format(compiler=compiler, executableName=executableName, executableExtension=executableExtension, cwd=outputPath, compileArgs=compileArgs)) 
     print("\nRunning...")
 
     os.system(outputPath + executableName + executableExtension)
