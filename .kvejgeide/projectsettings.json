@@ -7,7 +7,9 @@
             "compileArgs": "-Wall -Wextra -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer",
             "executableExtension": ".exe",
             "cpps": [
-                "TestApp.cpp"
+                "Core.cpp",
+                "EventHandler.cpp",
+                "KVTest.cpp"
             ]
         },
         {
