@@ -16,6 +16,7 @@ namespace Kvejge
     public:
         Core(int width = 640, int height = 480, std::string title = "Kvejge project");
         ~Core();
+        void quit();
 
     private:
         SDL_Window *sdlWindow;
@@ -23,7 +24,8 @@ namespace Kvejge
         Logger *logger;
         EventHandler *ehandler;
 
-        bool mainLoop();
+        void mainLoop();
+        bool shouldQuit;
     };
 } // namespace Kvejge
 
