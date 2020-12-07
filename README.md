@@ -17,6 +17,8 @@
  - Texturepacks
  - Animated textures
  - Audio nodes
+ 
+ - Split master into master (official releases) and devel
 
 
 # Building
