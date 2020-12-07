@@ -4,9 +4,10 @@
 
 ## Done
  - OOP structure design
- - Logger util [IN PROGRESS]
+ - Logger util
  - Compilation using SDL2
  - WebAssembly support
+ - Event handling [IN PROGRESS]
 
 ## To do
  - OOP structure design implementation
@@ -22,15 +23,17 @@
 
 1. Install SDL 2 dev libraries for your platform from [here](https://www.libsdl.org/download-2.0.php)
 
-2. Run `python make.py` to build and run the project (to switch to production, use the flag "-mode=PROD")
+2. Run `python make.py` to build and run the project
+
+## Switching build configuration
+
+Build configurations can be edited in ./kvejgeide/projectsettings.json  
+To switch to a different build configuration when building, use the `-config` flag.  
+`python make.py -config=wasm_dev
 
 # Building for the web (WebAssembly)
 
-1. Install Emscripten for your platform from [here](https://emscripten.org/docs/getting_started/downloads.html)
-
-2. Run `python make.py -target=WASM` to build the project (to switch to production, use the flag "-mode=PROD")
-
-3. If your browser of choice does not support cold-loading WASM files, host the generated HTML file on a local server.
+If your browser of choice does not support cold-loading WASM files, host the generated HTML file on a local server.
 
 
 # Features
